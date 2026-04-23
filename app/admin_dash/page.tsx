@@ -28,6 +28,7 @@ const page = () => {
                   <th className="py-2 px-3">Planting Date</th>
                   <th className="py-2 px-3">Size (Acres)</th>
                   <th className="py-2 px-3">Assigned To</th>
+                  <th className="py-2 px-3">Stage</th>
                   <th className="py-2 px-3">Status</th>
                   <th className="py-2 px-3">Actions</th>
 
@@ -44,6 +45,7 @@ const page = () => {
                   <td className="py-3 px-3 text-gray-500">12 Mar 2026</td>
                   <td className="py-3 px-3 text-gray-700 font-medium">5</td>
                   <td className="py-3 px-3 text-gray-700 font-medium">John</td>
+                  <td className="py-3 px-3 text-gray-700 font-medium">Planted</td>
                   <td className="py-3 px-3">
                     <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium">
                       Active
@@ -65,6 +67,7 @@ const page = () => {
                   <td className="py-3 px-3 text-gray-500">02 Apr 2026</td>
                   <td className="py-3 px-3 text-gray-700 font-medium">8</td>
                   <td className="py-3 px-3 text-gray-700 font-medium">John</td>
+                  <td className="py-3 px-3 text-gray-700 font-medium">Planted</td>
                   
                   <td className="py-3 px-3">
                     <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-medium">
