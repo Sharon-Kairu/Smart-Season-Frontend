@@ -4,6 +4,7 @@ import AdminCards from "../components/AdminCards";
 import { FaEdit } from "react-icons/fa";
 
 const page = () => {
+    
   return (
     <div className="bg-gray-100 w-full min-h-screen">
       <DashHeader />
