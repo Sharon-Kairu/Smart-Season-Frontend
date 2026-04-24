@@ -1,12 +1,39 @@
 'use client'
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import { FaSeedling, FaUsers } from "react-icons/fa";
 import NewAgent from "./Modals/NewAgent";
 import NewField from "./Modals/NewField";
+import apiService from "../services/apiService";
 
-const AdminCards = () => {
+interface AdminCardsProps {
+  onSuccess?: () => void;
+}
+
+const AdminCards = ({ onSuccess }: AdminCardsProps) => {
     const[showNewFieldModal,setShowNewFieldModal]=useState(false)
     const[showNewAgentModal,setShowNewAgentModal]=useState(false)
+    const[fieldCount, setFieldCount] = useState(0)
+    const[agentCount, setAgentCount] = useState(0)
+    const[loading, setLoading] = useState(true)
+
+    useEffect(() => {
+      const fetchCounts = async () => {
+        try {
+          const fieldsData = await apiService.getWithToken('/fields/fields/')
+          const usersData = await apiService.getWithToken('/users/agents/')
+          
+          setFieldCount(Array.isArray(fieldsData) ? fieldsData.length : 0)
+          setAgentCount(Array.isArray(usersData) ? usersData.length : 0)
+        } catch (error) {
+          console.error('Error fetching counts:', error)
+        } finally {
+          setLoading(false)
+        }
+      }
+
+      fetchCounts()
+    }, [])
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
 
@@ -21,7 +48,7 @@ const AdminCards = () => {
         <div className="flex items-end justify-between">
           <div>
             <p className="text-sm text-gray-500">Number of fields</p>
-            <h1 className="text-3xl font-bold text-gray-800">12</h1>
+            <h1 className="text-3xl font-bold text-gray-800">{loading ? '-' : fieldCount}</h1>
           </div>
 
           <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm"
@@ -44,7 +71,7 @@ const AdminCards = () => {
         <div className="flex items-end justify-between">
           <div>
             <p className="text-sm text-gray-500">Number of agents</p>
-            <h1 className="text-3xl font-bold text-gray-800">10</h1>
+            <h1 className="text-3xl font-bold text-gray-800">{loading ? '-' : agentCount}</h1>
           </div>
 
           <button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm"
@@ -56,10 +83,12 @@ const AdminCards = () => {
          <NewAgent
            isOpen={showNewAgentModal}
            onClose={()=>setShowNewAgentModal(false)}
+           onSuccess={onSuccess}
          />
          <NewField
            isOpen={showNewFieldModal}
            onClose={()=>setShowNewFieldModal(false)}
+           onSuccess={onSuccess}
          />
       </div>
 
